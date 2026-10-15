@@ -22,18 +22,6 @@ indian_equity_screener/
 └── app.py              # Streamlit UI
 ```
 
-## Setup
-
-```bash
-cd indian_equity_screener
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-# or: source .venv/bin/activate  # macOS/Linux
-
-pip install -r requirements.txt
-streamlit run app.py
-```
-
 ## The factors — and why each one matters
 
 This is the "curiosity" part: the score is only useful if you know *why* each input is there.
@@ -54,42 +42,8 @@ Each factor is converted to a **percentile rank** across the screened universe (
 
 > **Caveats:** `yfinance` data can be delayed or incomplete (ROCE is missing for some tickers), ratios are trailing, and a low P/E is not automatically "cheap" if earnings are collapsing. Treat this as a research starting point, not a buy/sell recommendation.
 
-## Configuring filters & weights
 
-In the Streamlit sidebar you can:
 
-* **Universe:** Use the default Nifty 50 list or paste any `.NS`/`.BO` tickers.
-* **Filters:** min/max P/E and P/B, minimum ROE/ROCE, maximum D/E, minimum market cap (₹ crore), and minimum 6M/12M returns. Leave blank to ignore.
-* **Weights:** Slide each factor's weight to tilt the composite toward value, quality, or momentum.
-
-## Share / deploy so others can view it
-
-The quickest way to give others a public link they can open in a browser is **Streamlit Community Cloud** (free):
-
-1. Push this folder to a GitHub repository.
-2. Go to [streamlit.io/cloud](https://streamlit.io/cloud), sign in with GitHub, and click **"New app"**.
-3. Select your repo, branch (`main`), and main file path: `indian_equity_screener/app.py`.
-4. Click **Deploy**. Streamlit gives you a public URL (e.g. `https://your-app.streamlit.app`) you can share with anyone — they only need a browser, no Python install.
-
-### Alternative: quick temporary share (no GitHub)
-
-If you just want a link right now for someone to peek at:
-
-```bash
-# run locally
-streamlit run app.py
-
-# in another terminal, expose it to the internet (install ngrok first)
-ngrok http 8501
-```
-
-ngrok prints a public URL (like `https://abc123.ngrok-free.app`) that works while your computer stays on and the app keeps running.
-
-## Extending it
-
-* Add more tickers to `tickers.py` or paste them in the UI.
-* Add new factors in `screener_engine.py` (compute → add to `_FACTOR_SPEC` with a direction → weight in `FactorWeights`).
-* Pipe in `nsepython` or Screener.in exports instead of `yfinance` if you prefer exchange-native sources.
 
 ## License
 
